@@ -1,4 +1,5 @@
 var mongoose = require( 'mongoose' );
+require('mongo-relation');
 
 /*
 
@@ -21,7 +22,8 @@ if( typeof global.TEST_DATABASE != "undefined" ) {
   dbURI = global.TEST_DATABASE;
 }
 else{
-  dbURI = 'mongodb://localhost/testdb';
+   dbURI = 'mongodb://localhost/androidServer';
+   // dbURI = 'mongodb://root:hest1234@ds033145.mongolab.com:33145/android';
 }
 
 mongoose.connect(dbURI);
@@ -49,7 +51,7 @@ process.on('SIGINT', function() {
 
 /** User SCHEMA **/
 /** Replace this Schema with your own(s) **/
-var usersSchema = new mongoose.Schema({
+/*var usersSchema = new mongoose.Schema({
   userName : String,
   email: {type: String, unique: true},
   pw: String,
@@ -57,4 +59,78 @@ var usersSchema = new mongoose.Schema({
 });
 
 mongoose.model( 'User', usersSchema,"testusers" );
+
+*/
+
+
+// UserSchema stores an Array of ObjectIds for posts
+/*var ListSchema = new mongoose.Schema({
+    name:String,
+    list:[{item:String,size:Number}],
+    users: [mongoose.Schema.ObjectId]
+});
+
+// PostSchema stores an ObjectId for the author
+var UserSchema = new mongoose.Schema({
+    username  : String,
+    user_id : mongoose.Schema.ObjectId,
+    password : String
+
+});
+
+// Attach the plugin
+ListSchema.hasMany('User');
+UserSchema.belongsTo('List', {through: 'user_id'});
+
+var List = mongoose.model('List', ListSchema)
+    , User = mongoose.model('User', UserSchema);
+*/
+
+
+//NEW
+/*
+var UserSchema = new mongoose.Schema({
+    _id     : Number,
+    username:String,
+    password : String
+});
+
+// PostSchema stores an ObjectId for the author
+var ListSchema = new mongoose.Schema({
+    _id : Number,
+    users: [{type: mongoose.Schema.ObjectId, ref: 'User' }],
+    title  : String,
+    list:[{item:String,size:Number}]
+});
+
+// Attach the plugin
+//UserSchema.hasMany('List');
+//ListSchema.belongsTo('User', {through: 'listId'});
+
+var User = mongoose.model('User', UserSchema)
+    , List = mongoose.model('List', ListSchema);
+ */
+
+
+var UserSchema = new mongoose.Schema({
+    _id     : Number,
+    username:{
+        type:String,
+        unique: true
+    },
+    password : String
+});
+
+// PostSchema stores an ObjectId for the author
+var ListSchema = new mongoose.Schema({
+    _id : Number,
+    users: [{username:String}],
+    title  : String,
+    list:[{_id:Number,item:String,size:Number}]
+});
+
+
+var User = mongoose.model('User', UserSchema)
+    , List = mongoose.model('List', ListSchema);
+
 

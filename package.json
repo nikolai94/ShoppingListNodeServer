@@ -1,5 +1,6 @@
 {
   "name": "ExpressAngularSeed",
+  "main" : "./bin/www",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
@@ -27,7 +28,8 @@
     "mocha": "^2.0.1",
     "protractor": "^1.1.1",
     "shelljs": "^0.2.6",
-    "should": "^4.1.0"
+    "should": "^4.1.0",
+    "mongo-relation":"*"
   },
   "scripts": {
     "pretestserver": "npm install",
