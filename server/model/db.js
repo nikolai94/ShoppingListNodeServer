@@ -22,8 +22,8 @@ if( typeof global.TEST_DATABASE != "undefined" ) {
   dbURI = global.TEST_DATABASE;
 }
 else{
-   dbURI = 'mongodb://localhost/androidServer';
-   // dbURI = 'mongodb://root:hest1234@ds033145.mongolab.com:33145/android';
+  //dbURI = 'mongodb://localhost/androidServer';
+   dbURI = 'mongodb://root:hest1234@ds033145.mongolab.com:33145/android';
 }
 
 mongoose.connect(dbURI);
@@ -113,7 +113,6 @@ var User = mongoose.model('User', UserSchema)
 
 
 var UserSchema = new mongoose.Schema({
-    _id     : Number,
     username:{
         type:String,
         unique: true
@@ -123,10 +122,11 @@ var UserSchema = new mongoose.Schema({
 
 // PostSchema stores an ObjectId for the author
 var ListSchema = new mongoose.Schema({
-    _id : Number,
     users: [{username:String}],
     title  : String,
-    list:[{_id:Number,item:String,size:Number}]
+    list:[{item:String,size:Number,status : Boolean}],
+    status : Boolean,
+    dateNote : String
 });
 
 
